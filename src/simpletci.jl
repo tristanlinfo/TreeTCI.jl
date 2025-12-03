@@ -40,6 +40,7 @@ mutable struct SimpleTCI{ValueType}
     bonderrors::Dict{NamedEdge,Float64}
     pivoterrors::Vector{Float64}
     maxsamplevalue::Float64
+    bondhistory::Vector{NamedTuple{(:edge, :bdim), Tuple{NamedEdge, Int}}}
 
     function SimpleTCI{ValueType}(localdims::Vector{Int}, g::NamedGraph) where {ValueType}
         n = length(localdims)
