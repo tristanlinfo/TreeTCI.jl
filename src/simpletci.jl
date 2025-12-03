@@ -64,7 +64,8 @@ mutable struct SimpleTCI{ValueType}
             g,
             bonderrors,
             Float64[],
-            0.0,                                                   # maxsamplevalue
+            0.0,                                                    # maxsamplevalue
+            NamedTuple{(:edge, :bdim), Tuple{NamedEdge, Int}}[],    # bondhistory
         )
     end
 end
