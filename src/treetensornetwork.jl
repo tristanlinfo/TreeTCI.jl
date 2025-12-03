@@ -88,7 +88,7 @@ function crossinterpolate(
     tci = SimpleTCI{ValueType}(f, localdims, g, initialpivots)
     ranks, errors, bonds = optimize!(tci, f; kwargs...)
     sitetensors = fillsitetensors(tci, f; center_vertex = center_vertex)
-    return TreeTensorNetwork(tci.g, sitetensors), ranks, errors
+    return TreeTensorNetwork(tci.g, sitetensors), ranks, errors, bonds
 end
 
 function evaluate(
