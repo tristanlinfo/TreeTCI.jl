@@ -102,7 +102,7 @@ function optimize!(
     
     tci.converged_IJset = deepcopy(tci.IJset)
     errornormalization = normalizeerror ? tci.maxsamplevalue : 1.0
-    return ranks, errors ./ errornormalization
+    return ranks, errors ./ errornormalization, deepcopy(tci.bondhistory)
 end
 
 """
@@ -119,6 +119,7 @@ function sweep2site!(
 ) where {ValueType}
 
     edge_path = generate_sweep2site_path(sweepstrategy, tci)
+    tci.bondhistory = NamedTuple{(:edge,:bdim),Tuple{NamedEdge,Int}}[]
 
     flushpivoterror!(tci)
 
@@ -168,6 +169,10 @@ function updatepivots!(
     updatemaxsample!(tci, Pi)
 
     luci = TCI.MatrixLUCI(Pi, reltol = reltol, abstol = abstol, maxrank = maxbonddim)
+
+    bdim = length(TCI.rowindices(luci))
+
+    push!(tci.bondhistory,(edge=edge,bdim=bdim))
 
     t3 = time_ns()
     if verbosity > 2
