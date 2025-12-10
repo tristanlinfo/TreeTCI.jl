@@ -102,7 +102,10 @@ function optimize!(
     
     tci.converged_IJset = deepcopy(tci.IJset)
     errornormalization = normalizeerror ? tci.maxsamplevalue : 1.0
-    return ranks, errors ./ errornormalization, deepcopy(tci.bondhistory)
+    bonds = [(src=b.edge.src, dst=b.edge.dst, bdim=b.bdim) for b in tci.bondhistory]
+
+    return ranks, errors ./ errornormalization, bonds
+
 end
 
 """
